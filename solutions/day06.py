@@ -20,8 +20,9 @@ while a[tuple(pos + directions[direction])] != "0":
 print(sum((a == "X").flatten()))
 
 # part 2
+b = a.copy()
 count = 0
-for coord in np.dstack((o == ".").nonzero()).squeeze():
+for coord in np.dstack((b == "X").nonzero()).squeeze():
     direction = 0
     a = o.copy()
     a[tuple(coord)] = "#"
