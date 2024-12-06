@@ -4,13 +4,12 @@ o = np.genfromtxt(
     "day06input.txt", dtype=str, deletechars="", comments="_", delimiter=1
 )
 o = np.pad(o, 1)
-directions = [np.array([-1, 0]), np.array([0, 1]), np.array([1, 0]), np.array([0, -1])]
+directions = np.array([[-1, 0], [0, 1], [1, 0], [0, -1]])
 start = np.array(np.hstack((o == "^").nonzero()))
 
 # part 1
 direction = 0
 a = o.copy()
-
 pos = start
 while a[tuple(pos + directions[direction])] != "0":
     if a[tuple(pos + directions[direction])] == "#":
@@ -27,7 +26,6 @@ for coord in np.dstack((o == ".").nonzero()).squeeze():
     a = o.copy()
     a[tuple(coord)] = "#"
     turns = np.zeros(o.shape, dtype=int)
-
     pos = start
     while a[tuple(pos + directions[direction])] != "0":
         if a[tuple(pos + directions[direction])] == "#":
