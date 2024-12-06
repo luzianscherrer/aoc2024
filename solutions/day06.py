@@ -1,20 +1,42 @@
 import numpy as np
 
-a = np.pad(
-    np.genfromtxt(
-        "day06input.txt", dtype=str, deletechars="", comments="_", delimiter=1
-    ),
-    1,
+o = np.genfromtxt(
+    "day06input.txt", dtype=str, deletechars="", comments="_", delimiter=1
 )
-a = np.pad(a, 1)
-y, x = np.hstack((a == "^").nonzero())
-while a[y - 1, x] != "0":
-    if a[y - 1, x] == "#":
-        a = np.rot90(a)
-        y, x = np.hstack((a == "^").nonzero())
-    else:
-        a[y, x] = "X"
-        y -= 1
-        a[y, x] = "^"
+o = np.pad(o, 1)
+directions = [np.array([-1, 0]), np.array([0, 1]), np.array([1, 0]), np.array([0, -1])]
+start = np.array(np.hstack((o == "^").nonzero()))
 
-print(1 + sum((a == "X").flatten()))
+# part 1
+direction = 0
+a = o.copy()
+
+pos = start
+while a[tuple(pos + directions[direction])] != "0":
+    if a[tuple(pos + directions[direction])] == "#":
+        direction = (direction + 1) % 4
+    else:
+        pos = pos + directions[direction]
+        a[tuple(pos)] = "X"
+print(sum((a == "X").flatten()))
+
+# part 2
+count = 0
+for coord in np.dstack((o == ".").nonzero()).squeeze():
+    direction = 0
+    a = o.copy()
+    a[tuple(coord)] = "#"
+    turns = np.zeros(o.shape, dtype=int)
+
+    pos = start
+    while a[tuple(pos + directions[direction])] != "0":
+        if a[tuple(pos + directions[direction])] == "#":
+            if turns[tuple(pos)] & (1 << direction):
+                count += 1
+                break
+            turns[tuple(pos)] += 1 << (direction)
+            direction = (direction + 1) % 4
+        else:
+            pos = pos + directions[direction]
+            a[tuple(pos)] = "X"
+print(count)
