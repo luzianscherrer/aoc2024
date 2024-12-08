@@ -14,22 +14,20 @@ def mark(y, x, val):
 
 
 for symbol in np.unique(field):
-    if symbol == ".":
-        continue
-    coords = list(zip(*(field == symbol).nonzero()))
-    for pair in combinations(coords, 2):
-        slope = (pair[0][1] - pair[1][1]) / (pair[0][0] - pair[1][0])
-        odist = dist = pair[1][0] - pair[0][0]
-        val = 1
-        while mark(pair[0][0] - dist, pair[0][1] - int(dist * slope), val):
-            dist += odist
-            val = 2
-        dist = odist
-        val = 1
-        while mark(pair[1][0] + dist, pair[1][1] + int(dist * slope), val):
-            dist += odist
-            val = 2
-        res[pair[0]] |= 2
-        res[pair[1]] |= 2
+    if symbol != ".":
+        for pair in combinations(zip(*(field == symbol).nonzero()), 2):
+            slope = (pair[0][1] - pair[1][1]) / (pair[0][0] - pair[1][0])
+            odist = dist = pair[1][0] - pair[0][0]
+            val = 1
+            while mark(pair[0][0] - dist, pair[0][1] - int(dist * slope), val):
+                dist += odist
+                val = 2
+            dist = odist
+            val = 1
+            while mark(pair[1][0] + dist, pair[1][1] + int(dist * slope), val):
+                dist += odist
+                val = 2
+            res[pair[0]] |= 2
+            res[pair[1]] |= 2
 
 print(np.sum(res & 1), np.sum(res > 0))
