@@ -16,10 +16,8 @@ def mark(y, x, val):
 for symbol in np.unique(field):
     if symbol == ".":
         continue
-    pos[symbol] = list(zip(*(field == symbol).nonzero()))
-
-for symbol in pos:
-    for pair in combinations(pos[symbol], 2):
+    coords = list(zip(*(field == symbol).nonzero()))
+    for pair in combinations(coords, 2):
         slope = (pair[0][1] - pair[1][1]) / (pair[0][0] - pair[1][0])
         odist = dist = pair[1][0] - pair[0][0]
         val = 1
