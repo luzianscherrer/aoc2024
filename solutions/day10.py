@@ -25,5 +25,4 @@ for startnode in startnodes:
     ):
         sum1 += 1
         sum2 += len(list(nx.all_simple_paths(G, startnode, endnode)))
-print(sum1)
-print(sum2)
+print(sum1, sum2)
