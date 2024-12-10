@@ -17,14 +17,13 @@ for y in range(1, field.shape[0] - 1):
             if field[tuple(direction + [y, x])] - field[y, x] == 1:
                 G.add_edge(f"{y},{x}", f"{y+direction[0]},{x+direction[1]}")
 
-sum = 0
+sum1, sum2 = 0, 0
 for startnode in startnodes:
-    sum += len(
-        list(
-            filter(
-                lambda a: a[1] == 9,
-                nx.single_source_shortest_path_length(G, startnode).items(),
-            )
-        )
-    )
-print(sum)
+    for endnode in filter(
+        lambda a: a[1] == 9,
+        nx.single_source_shortest_path_length(G, startnode).items(),
+    ):
+        sum1 += 1
+        sum2 += len(list(nx.all_simple_paths(G, startnode, endnode)))
+print(sum1)
+print(sum2)
