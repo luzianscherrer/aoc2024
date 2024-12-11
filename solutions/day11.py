@@ -15,40 +15,22 @@ def process(lst):
     return res
 
 
-total = 0
-values = open("day11input.txt").readline().split(" ")
-for value in values:
-    current = [int(value)]
-    for _ in range(25):
-        current = process(current)
-    total += len(current)
-print(total)
+def run(input, iterations):
+    d = defaultdict(int)
+    for val in input:
+        d[int(val)] = 1
+    for _ in range(iterations):
+        d2 = d.copy()
+        for key in list(d):
+            if d[key] > 0:
+                num = d[key]
+                d2[key] -= num
+                res = process([key])
+                for val in res:
+                    d2[val] += num
+        d = d2.copy()
+    return sum(d.values())
 
 
-# ---
-
-# d = defaultdict(int)
-
-# values = open("day11example.txt").readline().split(" ")
-# for val in values:
-#     d[int(val)] = 1
-
-# # print(d)
-
-# for _ in range(6):
-#     for key in list(d):
-#         # print(key, d[key])
-#         if d[key] > 0:
-#             num = d[key]
-#             d[key] = 0
-#             res = process([key])
-#             # print(res)
-#             for val in res:
-#                 d[val] += num
-#                 # print(val)
-#     print(d)
-#     input()
-# sum = 0
-# for key, value in d.items():
-#     sum += value
-# print(sum)
+input = open("day11input.txt").readline().split(" ")
+print(run(input, 25), run(input, 75))
