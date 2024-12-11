@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 def process(lst):
     res = []
     for num in lst:
@@ -20,3 +23,32 @@ for value in values:
         current = process(current)
     total += len(current)
 print(total)
+
+
+# ---
+
+# d = defaultdict(int)
+
+# values = open("day11example.txt").readline().split(" ")
+# for val in values:
+#     d[int(val)] = 1
+
+# # print(d)
+
+# for _ in range(6):
+#     for key in list(d):
+#         # print(key, d[key])
+#         if d[key] > 0:
+#             num = d[key]
+#             d[key] = 0
+#             res = process([key])
+#             # print(res)
+#             for val in res:
+#                 d[val] += num
+#                 # print(val)
+#     print(d)
+#     input()
+# sum = 0
+# for key, value in d.items():
+#     sum += value
+# print(sum)
