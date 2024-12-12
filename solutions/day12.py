@@ -13,8 +13,7 @@ neighbors = np.array([[0, 1], [1, 0], [0, -1], [-1, 0]])
 
 total1, total2 = 0, 0
 for area in areas:
-    strides = 0
-    fences = 0
+    strides, fences = 0, 0
     for i in range(4):
         coords = np.column_stack((labels == area).nonzero())
         if i == 0:
