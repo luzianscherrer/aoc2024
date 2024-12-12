@@ -23,11 +23,9 @@ def run(input, iterations):
         d2 = d.copy()
         for key in list(d):
             if d[key] > 0:
-                num = d[key]
-                d2[key] -= num
-                res = process([key])
-                for val in res:
-                    d2[val] += num
+                d2[key] -= d[key]
+                for val in process([key]):
+                    d2[val] += d[key]
         d = d2.copy()
     return sum(d.values())
 
