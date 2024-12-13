@@ -1,7 +1,8 @@
 import re
 import numpy as np
+from scipy import optimize
 
-result = 0
+parts = np.zeros(2, dtype=int)
 with open("day13input.txt") as file:
     for line in file:
         if "Button" in line:
@@ -13,7 +14,14 @@ with open("day13input.txt") as file:
         elif "Prize" in line:
             match = re.search(r"X=(\d+), Y=(\d+)", line)
             b = np.array([match.group(1), match.group(2)], dtype=int)
-            ret = np.linalg.solve(a, b)
-            if np.isclose(ret, np.round(ret)).all():
-                result += ret @ [3, 1]
-print(int(result))
+            a = np.vstack((a, -a))
+            for i in range(2):
+                b += int(1e13) * i
+                b2 = np.hstack((b, -b))
+                ret = optimize.linprog(
+                    np.array([-1, -1]), A_ub=a, b_ub=b2, integrality=[True, True]
+                )
+                if ret.success:
+                    parts[i] += ret.x @ [3, 1]
+
+print(f"{parts[0]} {parts[1]}")
