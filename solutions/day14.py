@@ -12,16 +12,12 @@ def as_string(m, p):
 
 
 def part1(m, p):
+    cy, cx = m[0] // 2, m[1] // 2
     res = np.zeros(4)
-    for pos in p:
-        if pos[0] < m[0] // 2 and pos[1] < m[1] // 2:
-            res[0] += 1
-        elif pos[0] > m[0] // 2 and pos[1] < m[1] // 2:
-            res[1] += 1
-        elif pos[0] < m[0] // 2 and pos[1] > m[1] // 2:
-            res[2] += 1
-        elif pos[0] > m[0] // 2 and pos[1] > m[1] // 2:
-            res[3] += 1
+    res[0] = np.sum((p[:, 0] < cy) & (p[:, 1] < cx))
+    res[1] = np.sum((p[:, 0] > cy) & (p[:, 1] < cx))
+    res[2] = np.sum((p[:, 0] < cy) & (p[:, 1] > cx))
+    res[3] = np.sum((p[:, 0] > cy) & (p[:, 1] > cx))
     print(f"part1: {int(np.prod(res))}")
 
 
