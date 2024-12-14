@@ -1,14 +1,6 @@
 import re
 import numpy as np
-
-np.set_printoptions(threshold=np.inf)
-np.set_printoptions(linewidth=np.inf)
-
-
-def as_string(m, p):
-    v = np.zeros(m)
-    v[p[:, 0], p[:, 1]] = 1
-    return re.sub(r"[ .\[\]]", "", str(v))
+from scipy.signal import convolve
 
 
 def part1(m, p):
@@ -21,6 +13,14 @@ def part1(m, p):
     print(f"part1: {int(np.prod(res))}")
 
 
+def part2_display(m, p):
+    v = np.zeros(m)
+    v[p[:, 0], p[:, 1]] = 1
+    np.set_printoptions(threshold=np.inf)
+    np.set_printoptions(linewidth=np.inf)
+    print(re.sub(r"[ .\[\]]", "", str(v)))
+
+
 data = open("day14input.txt").read().split("\n")
 p = np.zeros((len(data), 2), dtype=int)
 v = np.zeros_like(p)
@@ -30,15 +30,20 @@ for i, line in enumerate(data):
     p[i] = [int(match.group(2)), int(match.group(1))]
     v[i] = [int(match.group(4)), int(match.group(3))]
 
-m = np.array([p[:, 0].max() + 1, p[:, 1].max() + 1]).astype(int)
-i = 0
-while True:
+searchlen = 10
+kernel = np.ones(searchlen)
+lengths = np.array([p[:, 0].max() + 1, p[:, 1].max() + 1]).astype(int)
+i, found = 0, False
+while not found:
     if i == 100:
-        part1(m, p)
-    p = (p + v) % m
+        part1(lengths, p)
+    p = (p + v) % lengths
     i += 1
-    disp = as_string(m, p)
-    if "1111111111" in disp:
-        print(disp)
-        print(f"part2: {i}")
-        break
+    matrix = np.zeros(lengths)
+    matrix[p[:, 0], p[:, 1]] = 1
+    for row in matrix:
+        if np.any(convolve(row, kernel, mode="valid") == searchlen):
+            found = True
+            part2_display(lengths, p)
+            print(f"part2: {i}")
+            break
