@@ -37,13 +37,12 @@ for move in data[1].replace("\n", ""):
     elif move == "v":
         ahead = field[pos[0] :, pos[1]]
 
-    linepos, linelen = 0, 1
+    linelen = 1
     for i in range(1, len(ahead)):
         if ahead[i] == ".":
             for j in range(linelen):
                 ahead[i - j] = ahead[i - 1 - j]
-            ahead[linepos] = "."
-            linepos += 1
+            ahead[0] = "."
             break
         elif ahead[i] == "O":
             linelen += 1
@@ -69,13 +68,12 @@ for move in data[1].replace("\n", ""):
         elif move == ">":
             ahead = field[pos[0], pos[1] :]
 
-        linepos, linelen = 0, 1
+        linelen = 1
         for i in range(1, len(ahead)):
             if ahead[i] == ".":
                 for j in range(linelen):
                     ahead[i - j] = ahead[i - 1 - j]
-                ahead[linepos] = "."
-                linepos += 1
+                ahead[0] = "."
                 break
             elif ahead[i] == "[" or ahead[i] == "]":
                 linelen += 1
