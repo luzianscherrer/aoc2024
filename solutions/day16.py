@@ -33,11 +33,13 @@ for y in range(M.shape[0]):
                     f"{ns[0][0]},{ns[0][1]}",
                     f"{ns[1][0]},{ns[1][1]}",
                     weight=1002,
+                    miss=f"{y},{x}",
                 )
                 G.add_edge(
                     f"{ns[1][0]},{ns[1][1]}",
                     f"{ns[0][0]},{ns[0][1]}",
                     weight=1002,
+                    miss=f"{y},{x}",
                 )
 
         elif len(ns) == 3:
@@ -61,12 +63,42 @@ for y in range(M.shape[0]):
                 ns[0] = ns[2]
                 ns[2] = tmp
 
-            G.add_edge(f"{ns[0][0]},{ns[0][1]}", f"{ns[2][0]},{ns[2][1]}", weight=1002)
-            G.add_edge(f"{ns[2][0]},{ns[2][1]}", f"{ns[0][0]},{ns[0][1]}", weight=1002)
-            G.add_edge(f"{ns[1][0]},{ns[1][1]}", f"{ns[2][0]},{ns[2][1]}", weight=1002)
-            G.add_edge(f"{ns[2][0]},{ns[2][1]}", f"{ns[1][0]},{ns[1][1]}", weight=1002)
-            G.add_edge(f"{ns[0][0]},{ns[0][1]}", f"{ns[1][0]},{ns[1][1]}", weight=2)
-            G.add_edge(f"{ns[1][0]},{ns[1][1]}", f"{ns[0][0]},{ns[0][1]}", weight=2)
+            G.add_edge(
+                f"{ns[0][0]},{ns[0][1]}",
+                f"{ns[2][0]},{ns[2][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[2][0]},{ns[2][1]}",
+                f"{ns[0][0]},{ns[0][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[1][0]},{ns[1][1]}",
+                f"{ns[2][0]},{ns[2][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[2][0]},{ns[2][1]}",
+                f"{ns[1][0]},{ns[1][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[0][0]},{ns[0][1]}",
+                f"{ns[1][0]},{ns[1][1]}",
+                weight=2,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[1][0]},{ns[1][1]}",
+                f"{ns[0][0]},{ns[0][1]}",
+                weight=2,
+                miss=f"{y},{x}",
+            )
 
         elif len(ns) == 4:
             for n in ns:
@@ -78,20 +110,80 @@ for y in range(M.shape[0]):
                 ns[0] = ns[2]
                 ns[2] = tmp
 
-            G.add_edge(f"{ns[0][0]},{ns[0][1]}", f"{ns[2][0]},{ns[2][1]}", weight=1002)
-            G.add_edge(f"{ns[2][0]},{ns[2][1]}", f"{ns[0][0]},{ns[0][1]}", weight=1002)
-            G.add_edge(f"{ns[0][0]},{ns[0][1]}", f"{ns[3][0]},{ns[3][1]}", weight=1002)
-            G.add_edge(f"{ns[3][0]},{ns[3][1]}", f"{ns[0][0]},{ns[0][1]}", weight=1002)
+            G.add_edge(
+                f"{ns[0][0]},{ns[0][1]}",
+                f"{ns[2][0]},{ns[2][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[2][0]},{ns[2][1]}",
+                f"{ns[0][0]},{ns[0][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[0][0]},{ns[0][1]}",
+                f"{ns[3][0]},{ns[3][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[3][0]},{ns[3][1]}",
+                f"{ns[0][0]},{ns[0][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
 
-            G.add_edge(f"{ns[1][0]},{ns[1][1]}", f"{ns[2][0]},{ns[2][1]}", weight=1002)
-            G.add_edge(f"{ns[2][0]},{ns[2][1]}", f"{ns[1][0]},{ns[1][1]}", weight=1002)
-            G.add_edge(f"{ns[1][0]},{ns[1][1]}", f"{ns[3][0]},{ns[3][1]}", weight=1002)
-            G.add_edge(f"{ns[3][0]},{ns[3][1]}", f"{ns[1][0]},{ns[1][1]}", weight=1002)
+            G.add_edge(
+                f"{ns[1][0]},{ns[1][1]}",
+                f"{ns[2][0]},{ns[2][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[2][0]},{ns[2][1]}",
+                f"{ns[1][0]},{ns[1][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[1][0]},{ns[1][1]}",
+                f"{ns[3][0]},{ns[3][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[3][0]},{ns[3][1]}",
+                f"{ns[1][0]},{ns[1][1]}",
+                weight=1002,
+                miss=f"{y},{x}",
+            )
 
-            G.add_edge(f"{ns[0][0]},{ns[0][1]}", f"{ns[1][0]},{ns[1][1]}", weight=2)
-            G.add_edge(f"{ns[1][0]},{ns[1][1]}", f"{ns[0][0]},{ns[0][1]}", weight=2)
-            G.add_edge(f"{ns[2][0]},{ns[2][1]}", f"{ns[3][0]},{ns[3][1]}", weight=2)
-            G.add_edge(f"{ns[3][0]},{ns[3][1]}", f"{ns[2][0]},{ns[2][1]}", weight=2)
+            G.add_edge(
+                f"{ns[0][0]},{ns[0][1]}",
+                f"{ns[1][0]},{ns[1][1]}",
+                weight=2,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[1][0]},{ns[1][1]}",
+                f"{ns[0][0]},{ns[0][1]}",
+                weight=2,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[2][0]},{ns[2][1]}",
+                f"{ns[3][0]},{ns[3][1]}",
+                weight=2,
+                miss=f"{y},{x}",
+            )
+            G.add_edge(
+                f"{ns[3][0]},{ns[3][1]}",
+                f"{ns[2][0]},{ns[2][1]}",
+                weight=2,
+                miss=f"{y},{x}",
+            )
 
 for pos in dirs:
     if M[tuple(startpos + pos)] == ".":
@@ -102,3 +194,13 @@ for pos in dirs:
         )
 
 print(nx.shortest_path_length(G, source=start, target=end, weight="weight"))
+
+result_set = set()
+for path in nx.all_shortest_paths(G, source=start, target=end, weight="weight"):
+    for node in path:
+        result_set.add(node)
+    for u, v in zip(path[:-1], path[1:]):
+        if "miss" in G.get_edge_data(u, v):
+            result_set.add(G.get_edge_data(u, v)["miss"])
+
+print(len(result_set))
