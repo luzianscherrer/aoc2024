@@ -202,5 +202,4 @@ for path in nx.all_shortest_paths(G, source=start, target=end, weight="weight"):
     for u, v in zip(path[:-1], path[1:]):
         if "miss" in G.get_edge_data(u, v):
             result_set.add(G.get_edge_data(u, v)["miss"])
-
 print(len(result_set))
