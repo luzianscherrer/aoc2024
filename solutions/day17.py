@@ -11,8 +11,7 @@ def combo(value):
 
 
 while ip < len(prg) - 1:
-    opcode = int(prg[ip])
-    operand = int(prg[ip + 1])
+    opcode, operand = int(prg[ip]), int(prg[ip + 1])
     if opcode == 0:
         reg_a = reg_a // (2 ** combo(operand))
     elif opcode == 1:
