@@ -2,22 +2,12 @@ import re
 
 data = open("day17input.txt").read().replace("\n", "")
 match = re.search(r"A: (\d+).+B: (\d+).+C: (\d+).+m: (.+)", data)
-reg_a = int(match.group(1))
-reg_b = int(match.group(2))
-reg_c = int(match.group(3))
-prg = match.group(4).split(",")
-ip = 0
-output = []
+reg_a, reg_b, reg_c = int(match.group(1)), int(match.group(2)), int(match.group(3))
+prg, ip, output = match.group(4).split(","), 0, []
 
 
 def combo(value):
-    if value == 4:
-        return reg_a
-    elif value == 5:
-        return reg_b
-    elif value == 6:
-        return reg_c
-    return value
+    return (list(range(4)) + [reg_a, reg_b, reg_c])[value]
 
 
 while ip < len(prg) - 1:
@@ -43,5 +33,4 @@ while ip < len(prg) - 1:
         reg_c = reg_a // (2 ** combo(operand))
     ip += 2
 
-print(reg_a, reg_b, reg_c)
 print(",".join(map(str, output)))
