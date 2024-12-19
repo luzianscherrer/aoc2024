@@ -16,7 +16,7 @@ for i, current in enumerate(data):
             count += 1
             break
         for pattern in patterns:
-            if current[-pos:].startswith(pattern):
+            if current[-pos:].startswith(pattern) and pos - len(pattern) >= 0:
                 heapq.heappush(heap, (pos - len(pattern), pattern))
 
 print(count)
