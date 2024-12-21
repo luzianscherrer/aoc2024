@@ -47,13 +47,13 @@ def resolve(code, distance):
 
 
 def run(code, steps):
-    return min([resolve(x, steps) for x in get_paths(numpad, "A" + code)])
+    return min([resolve(x, steps - 1) for x in get_paths(numpad, "A" + code)])
 
 
 data = open("day21input.txt").read().split("\n")
 res1, res2 = 0, 0
 for code in data:
-    res1 += int(code.replace("A", "")) * run(code, 1)
-    res2 += int(code.replace("A", "")) * run(code, 24)
+    res1 += int(code.replace("A", "")) * run(code, 2)
+    res2 += int(code.replace("A", "")) * run(code, 25)
 
 print(res1, res2)
